@@ -54,7 +54,9 @@ public class ResumeServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String name=request.getParameter("name"); 
-		String email=request.getParameter("email"); 
+		String email=request.getParameter("email");
+		
+		session.setAttribute("name", name);
 		
 		System.out.println(name);
 		try {
