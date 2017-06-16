@@ -40,21 +40,42 @@ public class EducationServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String degree=request.getParameter("Degree");
 		String university=request.getParameter("University");
-		String graduationDate=request.getParameter("GraduationDate");
+		String graduationDate=request.getParameter("GraduationDateYear");
 		String nextUrl="/moreEducation.jsp";
 		Education edu = new Education();
+
+
 		HttpSession session = request.getSession();
-		edu= (Education)session.getAttribute("edu");
+        
 		
 		
-		
-		
-		
-		
+		edu= (Education)session.getAttribute("education");
+
+		edu.addEducation(degree, university, graduationDate);
+
+
+		session.setAttribute("education", edu);
+
+
+
+
+
+
+
+
+
+
+//&& edu.getLength()<10
 
 
 		System.out.println(edu.getEdu());
 		String yesOrNo=request.getParameter("yesOrNo");
+		if (yesOrNo.isEmpty()){
+			
+			yesOrNo="no";
+		}
+		
+		System.out.println(edu.getLength());
 		if( yesOrNo.equalsIgnoreCase("yes")){
 
 
@@ -68,6 +89,11 @@ public class EducationServlet extends HttpServlet {
 		else if ( yesOrNo.equalsIgnoreCase("no")){
 			nextUrl="/Jobs.jsp";
 
+		}
+		
+		else {
+			
+			nextUrl="/Jobs.jsp";
 		}
 
 		getServletContext().getRequestDispatcher(nextUrl).forward(request,response);

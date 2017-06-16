@@ -25,9 +25,9 @@
 
 	<p>Enter More Education?</p>
 	
-		<input type="radio" name="yesOrNo" value="Yes"> Yes<br> <input
-			type="radio" name="yesOrNo" value="No"> No<br> <input
-			type="submit" value="Submit">
+		<input type="radio" name="yesOrNo" value="yes"> Yes
+		<input type="radio" name="yesOrNo" value="no" > No
+		<input type="submit" value="Submit">
 	</form>
 </body>
 </html>

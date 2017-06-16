@@ -8,13 +8,13 @@
 </head>
 <body>
 	<h3>Enter your information below.</h3>
-<!-- 	<form action="ResumeServlet" method="post">   -->
+	<form action="SkillServlet" method="post"> 
 
 		<p>Skills:</p>
-
+        <p>( Familiar,  Proficient,or Expert)<br>
 		<p>
 			Skill 1 : <input type="text" name="skill1"></input>
-			Proficiency(Enter 1 for Familiar, 2 for Proficient, 3 for Expert)" <input type="text" name="skillLevel1">
+			Proficiency" <input type="text" name="skillLevel1">
 		</p>
 		<p>
 			Skill 2 : <input type="text" name="skill2"></input>
@@ -55,8 +55,12 @@
 		<p></p>
 		
 		<input type="submit" name="submit"></input>
+		
+		
+		
+		
 
-<!-- </form>   -->
+</form>  
 	
 
 

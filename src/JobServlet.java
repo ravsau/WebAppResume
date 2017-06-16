@@ -1,8 +1,6 @@
 
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,9 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class EducationServlet
+ * Servlet implementation class JobServlet
  */
-@WebServlet("/EducationServlet")
+@WebServlet("/JobServlet")
 public class JobServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -22,7 +20,7 @@ public class JobServlet extends HttpServlet {
 	 */
 	public JobServlet() {
 		super();
-
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -38,6 +36,8 @@ public class JobServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+
+		String nextUrl="/Skills.jsp";
 		String post=request.getParameter("post");
 		String position=request.getParameter("position");
 		String employer=request.getParameter("employer");
@@ -45,24 +45,25 @@ public class JobServlet extends HttpServlet {
 		String endYear=request.getParameter("endYear");
 		String dutyOne=request.getParameter("dutyOne");
 		String dutyTwo=request.getParameter("dutyTwo");
-		
-		
-		String nextUrl="/moreEducation.jsp";
-		Education edu = new Education();
+		Jobs job=new Jobs();
+
 		HttpSession session = request.getSession();
-		//session.getAttribute("eduNumber");
-		
-		
-		
-		
 
 
-		System.out.println(edu.getEdu());
+
+		job= (Jobs)session.getAttribute("jobs");
+
+		job.addJob(position, employer, startDate, endYear, dutyOne, dutyTwo);
+
+		session.setAttribute("jobs", job);
+
+
+
 		String yesOrNo=request.getParameter("yesOrNo");
 		if( yesOrNo.equalsIgnoreCase("yes")){
 
 
-			nextUrl="/moreEducation.jsp";
+			nextUrl="/Jobs.jsp";
 			//eduNumber++;
 			//session.setAttribute("eduNumber",eduNumber);
 
@@ -70,9 +71,10 @@ public class JobServlet extends HttpServlet {
 		}
 
 		else if ( yesOrNo.equalsIgnoreCase("no")){
-			nextUrl="/Jobs.jsp";
+			nextUrl="/Skills.jsp";
 
 		}
+
 
 		getServletContext().getRequestDispatcher(nextUrl).forward(request,response);
 	}

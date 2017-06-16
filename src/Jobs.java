@@ -28,7 +28,7 @@ public class Jobs {
 
 	}
 
-	public ArrayList getEdu(){
+	public ArrayList getJob(){
 
 		return jobs;
 
