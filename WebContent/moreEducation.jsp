@@ -12,21 +12,19 @@
 	<h1>${name}</h1>
 	<h3>Enter your education information</h3>
 
-	<form action="ResumeServlet" method="post">
+	<form action="EducationServlet" method="post">
 		Degree : <input type="text" name="Degree"></input>
 		<p></p>
 
-		Major: <input type="text" name="Major"></input>
 		<p></p>
 		University: <input type="text" name="University"></input>
 		<p></p>
 
 		Graduation year: <input type="text" name="GraduationDateYear"></input>
 
-	</form>
 
 	<p>Enter More Education?</p>
-	<form action="">
+	
 		<input type="radio" name="yesOrNo" value="Yes"> Yes<br> <input
 			type="radio" name="yesOrNo" value="No"> No<br> <input
 			type="submit" value="Submit">

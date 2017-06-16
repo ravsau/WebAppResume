@@ -8,10 +8,10 @@
 </head>
 <body>
 	<h3>Enter your information below.</h3>
-	<form action="ResumeServlet" method="post">
+	<form action="JobServlet" method="post">
 
 		<b> Work Experience</b>
-		</p>
+
 		Position : <input type="text" name="position"></input>
 		<p></p>
 
@@ -26,10 +26,10 @@
 
 
 
-	</form>
+
 
 	<p>Enter More Jobs?</p>
-	<form action="">
+	
 		<input type="radio" name="yesOrNo" value="Yes"> Yes<br> <input
 			type="radio" name="yesOrNo" value="No"> No<br> <input
 			type="submit" value="Submit">

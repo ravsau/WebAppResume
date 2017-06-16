@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h3>Enter your information below.</h3>
-	<form action="ResumeServlet" method="post">
+<!-- 	<form action="ResumeServlet" method="post">   -->
 
 		<p>Skills:</p>
 
@@ -56,7 +56,7 @@
 		
 		<input type="submit" name="submit"></input>
 
-	</form>
+<!-- </form>   -->
 	
 
 

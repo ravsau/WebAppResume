@@ -2,7 +2,7 @@
 
 import java.io.IOException;
 import java.sql.*;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -22,20 +22,22 @@ import org.apache.catalina.connector.OutputBuffer;
 public class ResumeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Connection connect = null;
-    private Statement statement = null;
-    private PreparedStatement preparedStatement = null;
-    private ResultSet resultSet = null;
+	private Statement statement = null;
+	private PreparedStatement preparedStatement = null;
+	private ResultSet resultSet = null;
 	private String lastName;
 	private int counter =0;
 	Scanner sc=new Scanner(System.in);
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ResumeServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	ArrayList<Education>final_edu = new ArrayList <Education>();
+	Education edu = new Education();
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public ResumeServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -50,15 +52,55 @@ public class ResumeServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+
 		HttpSession session = request.getSession();
-		
+
 		String name=request.getParameter("name"); 
 		String email=request.getParameter("email");
-		
+		String degree=request.getParameter("Degree");
+		String university=request.getParameter("University");
+		String graduationDate=request.getParameter("GraduationDate");
+
+		System.out.println(request.getParameter("GraduationDate"));
+
+
+
+		edu.addEducation(degree, university, graduationDate);
+
 		session.setAttribute("name", name);
+		session.setAttribute("email", email);
+		session.setAttribute("edu",edu );
+
+
+
+
+
+
+
 		
-		System.out.println(name);
+		String nextUrl="/moreEducation.jsp";
+
+		String yesOrNo=request.getParameter("yesOrNo");
+		
+
+		int eduNumber=1;
+
+		System.out.println(edu.getEdu());
+		if( yesOrNo.equalsIgnoreCase("yes")){
+
+			final_edu.add(edu);
+			nextUrl="/moreEducation.jsp";
+			eduNumber++;
+			session.setAttribute("final_edu",final_edu);
+
+
+		}
+
+		else if ( yesOrNo.equalsIgnoreCase("no")){
+			nextUrl="/Jobs.jsp";
+
+		}
+
 		try {
 			// This will load the MySQL driver, each DB has its own driver
 			// The MySQL driver is a JAR file that must be in the Build Path
@@ -66,24 +108,24 @@ public class ResumeServlet extends HttpServlet {
 			// Setup the connection with the DB
 			connect = DriverManager.getConnection("jdbc:mysql://localhost/Resume?user=root&password=password");
 
-			
 
-            
-		    preparedStatement = connect
-                    .prepareStatement("INSERT INTO UserInfo (Name, Email,Education,WorkExperience,Skill) VALUES(?,?,?,?,?)");
 
-            // "myuser, webpage, , summary, COMMENTS from feedback.comments");
-            // Parameters start with 1
-            preparedStatement.setString(1, "bart simpson");
-            preparedStatement.setString(2, "mail@domain.com");
-            preparedStatement.setString(3, "www.domain.com");
-            preparedStatement.setString(4, "ytyty");
-            preparedStatement.setString(5, "ytyty");
-            preparedStatement.executeUpdate();
-            
 
-				
-	} catch (Exception e) {
+			preparedStatement = connect
+					.prepareStatement("INSERT INTO UserInfo (Name, Email,Education,WorkExperience,Skill) VALUES(?,?,?,?,?)");
+
+			// "myuser, webpage, , summary, COMMENTS from feedback.comments");
+			// Parameters start with 1
+			preparedStatement.setString(1, "bart simpson");
+			preparedStatement.setString(2, "mail@domain.com");
+			preparedStatement.setString(3, "www.domain.com");
+			preparedStatement.setString(4, "ytyty");
+			preparedStatement.setString(5, "ytyty");
+			preparedStatement.executeUpdate();
+
+
+
+		} catch (Exception e) {
 			try {
 				throw e;
 			} catch (Exception e1) {
@@ -93,13 +135,19 @@ public class ResumeServlet extends HttpServlet {
 		} finally {
 			close();
 		}
-	
-		
-		getServletContext().getRequestDispatcher("/moreEducation.jsp").forward(request,response);
+
+
+
+
+
+		getServletContext().getRequestDispatcher(nextUrl).forward(request,response);
+
+
+
 
 	}
 
-	
+
 
 	private void writeResultSet(ResultSet resultSet) throws SQLException {
 		// ResultSet is initially before the first data set
@@ -115,54 +163,54 @@ public class ResumeServlet extends HttpServlet {
 			// e.g. resultSet.getSTring(2);
 			String customerId = resultSet.getString("CustumerID");
 			String fullName = resultSet.getString("FullName");
-			
 
-			
+
+
 			System.out.println("Customer ID: " + customerId);
 			System.out.println("Name: " + fullName);
 
 			System.out.println("Press 1 to move to another person with the same last name. Press 2 to change the address");
 
-	        
+
 
 			choice=sc.nextInt();
-			 sc.nextLine();
+			sc.nextLine();
 			if (choice==2){
-				
-			
- 
+
+
+
 				System.out.println("Enter the new Street Address of the person");
 
 				newStreet=sc.nextLine();
-			
+
 				System.out.println("Enter the new City of the person");
-		
-				
+
+
 
 				newCity=sc.nextLine();
-			
+
 				System.out.println("Enter the new State of the person");
-		
+
 
 				newState=sc.nextLine();
-			
+
 				System.out.println("Enter the new ZIP code of the person");
-				
+
 				newZip=sc.nextLine();
 				preparedStatement = connect
-	                    .prepareStatement("UPDATE   customer.Customers SET StreetAddress=?, City=?, State=?,"
-	                    		+ " ZipCode=? WHERE customer.Customers.CustumerID='"+customerId+"'");
-	                    		
-				
+						.prepareStatement("UPDATE   customer.Customers SET StreetAddress=?, City=?, State=?,"
+								+ " ZipCode=? WHERE customer.Customers.CustumerID='"+customerId+"'");
+
+
 				preparedStatement.setString(1, newStreet);
-	            preparedStatement.setString(2, newCity);
-	            preparedStatement.setString(3, newState);
-	            preparedStatement.setString(4, newZip);
-	            preparedStatement.executeUpdate();
-				
-				
-		
-				
+				preparedStatement.setString(2, newCity);
+				preparedStatement.setString(3, newState);
+				preparedStatement.setString(4, newZip);
+				preparedStatement.executeUpdate();
+
+
+
+
 
 			}
 
@@ -170,7 +218,7 @@ public class ResumeServlet extends HttpServlet {
 
 
 
-			
+
 		}
 	}
 
@@ -192,11 +240,11 @@ public class ResumeServlet extends HttpServlet {
 		} catch (Exception e) {
 
 		}
-    }
-		
-		
-	
-		
+	}
+
+
+
+
 
 
 }

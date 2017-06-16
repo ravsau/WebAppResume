@@ -16,7 +16,7 @@ public class Jobs {
 
 	public Jobs(){
 
-
+		jobs=new ArrayList();
 
 	}
 

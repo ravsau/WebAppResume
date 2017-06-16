@@ -11,7 +11,7 @@ public class Education {
 
 
 	public Education(){
-
+		edu=new ArrayList();
 
 
 	}
